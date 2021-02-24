@@ -15,12 +15,22 @@ function App() {
   const [testData, setTestData] = useState([]);
   const [alerts, setAlerts] = useState([])
 
-  // const test = () => {
-  //   axios.get('http://127.0.0.1:8000/')
-  //     .then((response) => {
-  //       setTestData(response.data);
-  //     })
-  // }
+  const getUsers = () => {
+    axios.get('http://127.0.0.1:8000/users')
+      .then((response) => {
+        const usersJson = response.data.users;
+        const users = Object.entries(usersJson);
+
+        for (const [key, value] of users) {
+          let tmpObj = {};
+          tmpObj["id"] = key;
+          tmpObj["values"] = value;
+          console.log(tmpObj)
+          setTestData(arr => [...arr, tmpObj]);
+        }
+      })
+  }
+
 
   return (
     <div className="App">
@@ -32,7 +42,7 @@ function App() {
       <main>
       <Container>
           <div className="buttons">
-            <Button variant="primary" onClick={() => console.log("test")}>Alert</Button>{' '}
+            <Button variant="primary" onClick={getUsers}>Alert</Button>{' '}
             <Button variant="secondary">Clear</Button>{' '}
           </div>
 
@@ -41,6 +51,7 @@ function App() {
             <thead>
               <tr>
                 <th>Id</th>
+                <th>Email</th>
                 <th>Full Name</th>
               </tr>
             </thead>
@@ -48,7 +59,8 @@ function App() {
               {testData.map(e => (
                 <tr>
                   <td>{e.id}</td>
-                  <td>{e.name}</td>
+                  <td>{e.values.email}</td>
+                  <td>{e.values.name}</td>
                 </tr>
               ))}
             </tbody>

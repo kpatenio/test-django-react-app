@@ -7,16 +7,6 @@ from rest_framework.decorators import api_view
 from .models import User
 
 # Create your views here.
-# @api_view(["GET"])
-# def index(request):
-
-#     data = {}
-
-#     template = loader.get_template('api/index.html')
-#     return HttpResponse(template.render(data,request))
-#     # return JsonResponse({"test": 1})
-
-
 @api_view(["GET", "POST"])
 def users(request):
 
@@ -27,7 +17,7 @@ def users(request):
         response = {}
         
         for user in users:
-            response[user.id.int] = user.name
+            response[user.id.int] = {"name": user.name, "email": user.email}
 
         return JsonResponse({"users": response})
 
@@ -36,11 +26,15 @@ def users(request):
 
         try:
             name = jsonData['name']
+            email = jsonData['email']
+
+            # just for testing
+            assert u'@' in email
+
+            new_user = User(name=name, email=email)
+            new_user.save()
         except:
             return HttpResponse(status=400)
-
-        new_user = User(name=name)
-        new_user.save()
 
         return HttpResponse(status=200)
 
