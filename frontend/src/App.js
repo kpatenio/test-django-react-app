@@ -5,6 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
 
@@ -14,6 +15,18 @@ function App() {
 
   const [testData, setTestData] = useState([]);
   const [alerts, setAlerts] = useState([])
+
+  const onSubmit = (e) => {
+    // prevent refresh
+    e.preventDefault();
+    // prevent DOM bubbling (redundant in this example)
+    e.stopPropagation();
+
+    axios.post('http://127.0.0.1:8000/users', {
+      name: e.target.elements[0].value,
+      email: e.target.elements[1].value
+    })
+  }
 
   const getUsers = () => {
     axios.get('http://127.0.0.1:8000/users')
@@ -25,7 +38,6 @@ function App() {
           let tmpObj = {};
           tmpObj["id"] = key;
           tmpObj["values"] = value;
-          console.log(tmpObj)
           setTestData(arr => [...arr, tmpObj]);
         }
       })
@@ -41,6 +53,23 @@ function App() {
 
       <main>
       <Container>
+
+      <Form onSubmit={onSubmit}>
+        <Form.Group>
+        <Form.Label>Name</Form.Label>
+        <Form.Control placeholder="Enter name" />
+        </Form.Group>
+
+        <Form.Group controlId="formBasicEmail">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+        Submit
+        </Button>
+    </Form>
+
           <div className="buttons">
             <Button variant="primary" onClick={getUsers}>Alert</Button>{' '}
             <Button variant="secondary">Clear</Button>{' '}
