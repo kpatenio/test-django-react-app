@@ -42,10 +42,14 @@ h2 {
 }
 
 .buttons {
-  margin: 50px;
+  margin-bottom: 50px;
 }
 
 .btn {
   margin: 10px;
   width: 100px;
+}
+
+.form-label {
+  color: white;
 }

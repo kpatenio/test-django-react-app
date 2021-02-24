@@ -1,12 +1,9 @@
 import {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
 
 const axios = require('axios').default;
@@ -14,7 +11,10 @@ const axios = require('axios').default;
 function App() {
 
   const [testData, setTestData] = useState([]);
-  const [alerts, setAlerts] = useState([])
+
+  useEffect(() => {
+    getUsers()
+  }, [])
 
   const onSubmit = (e) => {
     // prevent refresh
@@ -43,7 +43,6 @@ function App() {
       })
   }
 
-
   return (
     <div className="App">
       {}
@@ -54,46 +53,44 @@ function App() {
       <main>
       <Container>
 
-      <Form onSubmit={onSubmit}>
-        <Form.Group>
-        <Form.Label>Name</Form.Label>
-        <Form.Control placeholder="Enter name" />
-        </Form.Group>
+        <Form onSubmit={onSubmit}>
+          <Form.Group>
+          <Form.Label className="form-label">Name</Form.Label>
+          <Form.Control placeholder="Enter name" />
+          </Form.Group>
 
-        <Form.Group controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-        Submit
-        </Button>
-    </Form>
+          <Form.Group controlId="formBasicEmail">
+          <Form.Label className="form-label">Email address</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" />
+          </Form.Group>
 
           <div className="buttons">
-            <Button variant="primary" onClick={getUsers}>Alert</Button>{' '}
-            <Button variant="secondary">Clear</Button>{' '}
+            <Button variant="primary" type="submit" className="buttons">
+            Submit
+            </Button>
           </div>
+        </Form>
 
-          <h2>Users</h2>
-          <Table striped bordered hover variant="dark">
-            <thead>
+        <h2>Users</h2>
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Email</th>
+              <th>Full Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {testData.map(e => (
               <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Full Name</th>
+                <td>{e.id}</td>
+                <td>{e.values.email}</td>
+                <td>{e.values.name}</td>
               </tr>
-            </thead>
-            <tbody>
-              {testData.map(e => (
-                <tr>
-                  <td>{e.id}</td>
-                  <td>{e.values.email}</td>
-                  <td>{e.values.name}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+            ))}
+          </tbody>
+        </Table>
+
       </Container>
       </main>
     </div>
