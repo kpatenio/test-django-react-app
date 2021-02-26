@@ -26,12 +26,20 @@ SECRET_KEY = 'qeq-im#f3h@_a_-7+39z14)xa379@dkq#6g_lvxmh26(!7758o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# For now, lol
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
-CORS_ORIGIN_ALLOW_ALL=True
+# CORS_ORIGIN_ALLOW_ALL=True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:8080",
+    "http://127.0.0.1:8080"
+]
 
 INSTALLED_APPS = [
     'api.apps.ApiConfig',

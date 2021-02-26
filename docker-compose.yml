@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  web:
+    image: nginx:alpine
+    volumes:
+      - "./frontend/build:/usr/share/nginx/html"
+    ports:
+    - target: 80
+      published: 8080 # note: cybera use port 80
+      protocol: tcp
+      mode: host
+
+  django:
+    build: ./backend
+    ports:
+    - "8000:8000"
