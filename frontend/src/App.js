@@ -22,14 +22,16 @@ function App() {
     // prevent DOM bubbling (redundant in this example)
     e.stopPropagation();
 
-    axios.post('http://127.0.0.1:8000/users', {
+    // TODO - do not hardcode
+    // TODO - location origin
+    axios.post('http://[2605:fd00:4:1001:f816:3eff:fe06:dc82]/api/users', {
       name: e.target.elements[0].value,
       email: e.target.elements[1].value
     })
   }
 
   const getUsers = () => {
-    axios.get('http://127.0.0.1:8000/users')
+    axios.get('http://[2605:fd00:4:1001:f816:3eff:fe06:dc82]/api/users')
       .then((response) => {
         const usersJson = response.data.users;
         const users = Object.entries(usersJson);

@@ -15,11 +15,14 @@ WORKDIR ./mysite
 
 EXPOSE 8000
 
-RUN python manage.py makemigrations
+# Note: makemigrations and migrate should be run locally by the developers
+# question: should we run migrate first to initialize data or commit migrations?
+# todo: revisit later
 RUN python manage.py migrate
+
+# Ensure we get all the UI stuff we need
 RUN python manage.py collectstatic
 
-ENV PYTHONUNBUFFERED=TRUE
 # what happens when you run this image
 # gunicorn needs to know where the wsgi file is
 # 0.0.0.0 is a "bind all interfaces" ip address - anyone can connect to port 8000

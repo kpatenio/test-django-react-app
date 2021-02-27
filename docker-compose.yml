@@ -4,7 +4,16 @@ services:
     build: ./frontend
     ports:
     - "80:80"
+    # if docker compose finds out if any services are not running
+    # restart them
+    restart: always
   django:
     build: ./backend
     environment:
     - SCRIPT_NAME=/api
+    # copy local db to container (should already exist)
+    # otherwise, if not. run: docker cp <django container name>:/usr/src/app/mysite/db.sqlite3 ./
+    # above will copy to local
+    volumes:
+    - "./db.sqlite3:/usr/src/app/mysite/db.sqlite3"
+    restart: always
