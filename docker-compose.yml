@@ -3,12 +3,8 @@ services:
   web:
     build: ./frontend
     ports:
-    - target: 80
-      published: 80 # note: cybera use port 80
-      protocol: tcp # default
-      mode: host # default
-
+    - "80:80"
   django:
     build: ./backend
-    ports:
-    - "8000:8000"
+    environment:
+    - SCRIPT_NAME=/api

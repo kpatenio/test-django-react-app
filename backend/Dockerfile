@@ -15,6 +15,11 @@ WORKDIR ./mysite
 
 EXPOSE 8000
 
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+RUN python manage.py collectstatic
+
+ENV PYTHONUNBUFFERED=TRUE
 # what happens when you run this image
 # gunicorn needs to know where the wsgi file is
 # 0.0.0.0 is a "bind all interfaces" ip address - anyone can connect to port 8000

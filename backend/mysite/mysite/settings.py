@@ -131,5 +131,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
-STATIC_URL = '/static/'
+# Ensure we can get <script name>/static
+# Hopefully defined by gunicorn
+URL_PREFIX = os.environ.get("SCRIPT_NAME", "")
+STATIC_URL = URL_PREFIX + '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
